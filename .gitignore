@@ -1,0 +1,8 @@
+# Ignore temp files
+*.swp
+
+# Ignore Ansible local config
+ansible.cfg
+
+# Ignore other temporary files
+*.retry
