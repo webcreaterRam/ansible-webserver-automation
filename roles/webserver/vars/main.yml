@@ -1,0 +1,28 @@
+---
+# which webserver to install (apache/nignx)
+preferred_webserver: apache
+
+# OS-wise web packages, services and webroots
+web_packages:
+  Debian:
+    apache:
+      name: apache2
+      service: apache2
+      webroot: /var/www/html
+
+    nginx:
+      name: nginx
+      service: nginx
+      webroot: /usr/share/nginx/html
+
+
+  RedHat:
+    apache:
+      name: httpd
+      service: httpd
+      webroot: /var/www/html
+
+    nginx:
+      name: nginx
+      service: nginx
+      webroot: /usr/share/nginx/html

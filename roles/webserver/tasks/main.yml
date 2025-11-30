@@ -1,0 +1,35 @@
+---
+# Select correct OS
+- name: Select correct OS
+  set_fact:
+    selected_pkg: "{{ web_packages[ansible_os_family][preferred_webserver].name }}"
+    selected_service: "{{ web_packages[ansible_os_family][preferred_webserver].service }}"
+    final_webroot: "{{ web_packages[ansible_os_family][preferred_webserver].webroot }}"
+
+- name: Install selected webserver package
+  package:
+    name: "{{ selected_pkg }}"
+    state: present
+
+
+- name: Ensure webroot directory exists
+  file:
+    path: "{{ final_webroot }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+
+- name: Deploy template index.html
+  template:
+    src: index.html.j2
+    dest: "{{ final_webroot }}/index.html"
+  notify: restart webserver
+
+
+- name: start & enable webserver
+  service:
+    name: "{{ selected_service }}"
+    state: started
+    enabled: yes
